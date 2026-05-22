@@ -1,0 +1,23 @@
+{
+  "name": "澳大利亚东海岸之旅 2026",
+  "short_name": "澳洲之旅",
+  "description": "悉尼·凯恩斯·墨尔本 情侣Chill自由行攻略",
+  "start_url": "/aus-travel-guide.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a6b8a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+*.pptx
+_err.txt
+ocr_result.txt
+wa_*.png
+wa_*.jpg
+generate_travel_ppt.py
+node_modules/
