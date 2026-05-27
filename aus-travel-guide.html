@@ -54,7 +54,11 @@
   .sec-sub { color:var(--text-light); font-size:14px; margin-bottom:20px }
 
   .overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:24px }
-  .ov-card { background:var(--card); border-radius:var(--radius); padding:14px 12px; box-shadow:var(--shadow); display:flex; align-items:center; gap:10px }
+  .ov-card { background:var(--card); border-radius:var(--radius); padding:14px 12px; box-shadow:var(--shadow); display:flex; align-items:center; gap:10px; border-left:3px solid transparent; }
+  .ov-card.trip { border-left-color: var(--gold); }
+  .ov-card.syd { border-left-color: var(--syd); }
+  .ov-card.cns { border-left-color: var(--cns); }
+  .ov-card.mel { border-left-color: var(--mel); }
   .ov-card .icon { font-size:24px; flex-shrink:0 }
   .ov-card .val { font-weight:700; font-size:13px; color:var(--text) }
   .ov-card .lbl { font-size:11px; color:var(--text-light) }
@@ -73,32 +77,60 @@
   .day-block .day-head {
     padding:16px 20px; color:#fff; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
   }
-  .day-block .day-head.syd { background: var(--syd) }
-  .day-block .day-head.cns { background: var(--cns) }
-  .day-block .day-head.mel { background: var(--mel) }
-  .day-block .day-head.kl  { background: var(--kl) }
+  /* City-specific day block themes */
+  .day-block { border-left: 4px solid transparent; }
+  .day-block.syd { border-left-color: var(--syd); }
+  .day-block.syd .tl-rows { background: linear-gradient(180deg, var(--syd-bg) 0%, #fff 100%); }
+  .day-block.syd .tl-row:nth-child(even) { background: rgba(26,107,138,.04); }
+  .day-block.syd .day-head { background: var(--syd); }
+
+  .day-block.cns { border-left-color: var(--cns); }
+  .day-block.cns .tl-rows { background: linear-gradient(180deg, var(--cns-bg) 0%, #fff 100%); }
+  .day-block.cns .tl-row:nth-child(even) { background: rgba(45,138,110,.04); }
+  .day-block.cns .day-head { background: var(--cns); }
+
+  .day-block.mel { border-left-color: var(--mel); }
+  .day-block.mel .tl-rows { background: linear-gradient(180deg, var(--mel-bg) 0%, #fff 100%); }
+  .day-block.mel .tl-row:nth-child(even) { background: rgba(92,45,145,.04); }
+  .day-block.mel .day-head { background: var(--mel); }
+
+  .day-block.kl { border-left-color: var(--kl); }
+  .day-block.kl .day-head { background: var(--kl); }
+
+  /* City section divider */
+  .city-divider {
+    text-align: center; padding: 26px 20px; margin: 40px 0 18px;
+    border-radius: var(--radius); color: #fff;
+    font-size: 20px; font-weight: 800;
+    box-shadow: var(--shadow-md); letter-spacing: 1px;
+  }
+  .city-divider .days { font-size: 13px; opacity: .85; font-weight: 400; margin-left: 8px; letter-spacing: 0; }
+  .city-divider.syd { background: linear-gradient(135deg, #1a6b8a 0%, #2980b9 100%); }
+  .city-divider.cns { background: linear-gradient(135deg, #11998e 0%, #2d8a6e 100%); }
+  .city-divider.mel { background: linear-gradient(135deg, #5c2d91 0%, #8e44ad 100%); }
   .day-block .day-head .date { font-size:18px; font-weight:700 }
   .day-block .day-head .dow  { font-size:13px; opacity:.85 }
 
   /* ── TIMELINE ROWS ── */
   .tl-rows { padding:12px 20px 16px }
   .tl-row {
-    display:flex; gap:14px; padding:10px 0; border-bottom:1px solid #f0f0f0;
-    align-items:flex-start;
+    display:grid; grid-template-columns:24px 72px 1fr; gap:0 14px;
+    padding:10px 0; border-bottom:1px solid #f0f0f0;
+    align-items:start;
   }
   .tl-row:last-child { border-bottom:none }
   .tl-row .tl-time {
-    flex-shrink:0; width:72px; font-size:12px; font-weight:700; color:var(--text-light);
-    text-align:right; padding-top:2px;
+    font-size:12px; font-weight:700; color:var(--text-light);
+    text-align:right;
   }
-  .tl-row .tl-content { flex:1; font-size:14px }
+  .tl-row .tl-content { font-size:14px }
   .tl-row .tl-content .tl-title { font-weight:700; margin-bottom:1px }
   .tl-row .tl-content .tl-desc { font-size:12px; color:var(--text-light) }
-  .tl-row .tl-emoji { flex-shrink:0; width:24px; text-align:center; font-size:17px; padding-top:1px }
+  .tl-row .tl-emoji { text-align:center; font-size:17px }
 
   /* Variations */
-  .tl-row.highlight { background:#fef9e7; border-radius:8px; padding:8px 12px; margin:4px 0 }
-  .tl-row.break { background:#f5f5f5; border-radius:8px; padding:6px 12px; color:var(--text-light); font-size:13px }
+  .tl-row.highlight { background:#fef9e7; border-radius:8px; padding:8px 0; margin:4px 0 }
+  .tl-row.break { background:#f5f5f5; border-radius:8px; padding:6px 0; color:var(--text-light); font-size:13px }
   .tl-row.break .tl-time { color:var(--text-light); font-weight:400 }
 
   /* Inline images within timeline */
@@ -219,18 +251,12 @@
 <div class="sec-sub">13天 · 3座城市 · 情侣Chill游 · 香港直飞悉尼</div>
 
 <div class="overview-grid">
-  <div class="ov-card"><span class="icon">👫</span><div><div class="val">情侣出行</div><div class="lbl">22岁 · 江门出发</div></div></div>
-  <div class="ov-card"><span class="icon">🗓️</span><div><div class="val">7月8日–20日</div><div class="lbl">13天含飞行</div></div></div>
-  <div class="ov-card"><span class="icon">✈️</span><div><div class="val">5段飞行</div><div class="lbl">去程香港直飞悉尼</div></div></div>
-  <div class="ov-card"><span class="icon">🏙️</span><div><div class="val">悉尼 4晚</div><div class="lbl">7/9 – 7/13</div></div></div>
-  <div class="ov-card"><span class="icon">🌴</span><div><div class="val">凯恩斯 3晚</div><div class="lbl">7/13 – 7/16</div></div></div>
-  <div class="ov-card"><span class="icon">🏛️</span><div><div class="val">墨尔本 4晚</div><div class="lbl">7/16 – 7/20</div></div></div>
-  <div class="ov-card"><span class="icon">🏈</span><div><div class="val">AFL现场</div><div class="lbl">MCG · 7/18晚</div></div></div>
-  <div class="ov-card"><span class="icon">🛍️</span><div><div class="val">购物日 7h</div><div class="lbl">7/11 周六</div></div></div>
-  <div class="ov-card"><span class="icon">🦒</span><div><div class="val">Taronga Zoo</div><div class="lbl">7/12 周日上午</div></div></div>
-  <div class="ov-card"><span class="icon">🚗</span><div><div class="val">墨尔本自驾</div><div class="lbl">大洋路</div></div></div>
-  <div class="ov-card"><span class="icon">☕</span><div><div class="val">Toby's Estate</div><div class="lbl">全球#5咖啡</div></div></div>
-  <div class="ov-card"><span class="icon">🍜</span><div><div class="val">Chinatown Pho</div><div class="lbl">7/10 宵夜</div></div></div>
+  <div class="ov-card trip"><span class="icon">👫</span><div><div class="val">情侣出行</div><div class="lbl">22岁 · 江门出发 · 13天</div></div></div>
+  <div class="ov-card trip"><span class="icon">✈️</span><div><div class="val">香港直飞悉尼</div><div class="lbl">7/8 22:05 → 7/9 09:25</div></div></div>
+  <div class="ov-card trip"><span class="icon">💰</span><div><div class="val">预算 2.4–3.3万</div><div class="lbl">2人不含机票</div></div></div>
+  <div class="ov-card syd"><span class="icon">🏙️</span><div><div class="val">悉尼 4晚</div><div class="lbl">🦒 动物园 · 🛍️ 购物 · ☕ 咖啡</div></div></div>
+  <div class="ov-card cns"><span class="icon">🌴</span><div><div class="val">凯恩斯 3晚</div><div class="lbl">🐠 大堡礁 · 🎈 库兰达雨林</div></div></div>
+  <div class="ov-card mel"><span class="icon">🏛️</span><div><div class="val">墨尔本 4晚</div><div class="lbl">🏈 AFL · 🚗 大洋路 · ☕ Citywalk</div></div></div>
 </div>
 
 <!-- ═══════════ ROUTE MAP ═══════════ -->
@@ -286,7 +312,7 @@
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🚗</span><span class="tl-time">下午</span>
-      <span class="tl-content"><span class="tl-title">江门 → 香港国际机场</span><span class="tl-desc">从江门可坐船直达香港机场（约2.5小时，中山港/江门港→香港海天码头），或经深圳湾口岸/港珠澳大桥到香港机场。建议下午3-4点从江门出发，预留充足时间</span></span>
+      <span class="tl-content"><span class="tl-title">江门 → 香港国际机场</span><span class="tl-desc">江门港/中山港坐船直达香港海天码头（约2.5h），或经深圳湾/港珠澳大桥。建议15:00-16:00出发</span></span>
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🛫</span><span class="tl-time">22:05</span>
@@ -296,6 +322,8 @@
 </div>
 
 <!-- ############################################ SYDNEY ############################################ -->
+<div class="city-divider syd">🏙️ 悉尼 <span class="days">7月9日–13日 · 4晚 · Darlinghurst</span></div>
+
 <div class="sec-title" id="day1"><span class="dot" style="background:var(--syd)"></span>🏙️ 悉尼 · Day 1</div>
 <div class="sec-sub">7月9日 周四 · 全球最佳咖啡 + 海德公园 + 美术馆 + 海港日落</div>
 
@@ -303,8 +331,8 @@
      src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=960&q=80"
      alt="Sydney Opera House & Harbour Bridge" onerror="this.style.display='none'">
 
-<div class="day-block">
-  <div class="day-head syd"><span class="date">🏙️ 悉尼初体验 · 咖啡 → 艺术 → 日落</span><span class="dow">7月9日 周四 · 日落 ~17:00</span></div>
+<div class="day-block syd">
+  <div class="day-head"><span class="date">🏙️ 悉尼初体验 · 咖啡 → 艺术 → 日落</span><span class="dow">7月9日 周四 · 日落 ~17:00</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🛬</span><span class="tl-time">09:25</span>
@@ -375,7 +403,7 @@
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🍽️</span><span class="tl-time">19:00</span>
-      <span class="tl-content"><span class="tl-title">晚餐：Darlinghurst / Potts Point</span><span class="tl-desc">推荐：The Apollo（希腊菜，氛围好）、Franca Brasserie（法餐）、或沿着 Victoria St 找家顺眼的</span></span>
+      <span class="tl-content"><span class="tl-title">晚餐：Darlinghurst / Potts Point</span><span class="tl-desc">推荐：The Apollo 希腊菜 / Franca Brasserie 法餐 / Victoria St 随意选</span></span>
     </div>
     <div class="tl-row highlight">
       <span class="tl-emoji">🍰</span><span class="tl-time">20:30</span>
@@ -407,8 +435,8 @@
   </div>
 </div>
 
-<div class="day-block">
-  <div class="day-head syd"><span class="date">🏙️ 海港经典日 · 车站 → 歌剧院 → 大桥 → Manly → 达令港 → Pho</span><span class="dow">7月10日 周五 · 日落 ~17:00</span></div>
+<div class="day-block syd">
+  <div class="day-head"><span class="date">🏙️ 海港经典日 · 车站 → 歌剧院 → 大桥 → Manly → 达令港 → Pho</span><span class="dow">7月10日 周五 · 日落 ~17:00</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">08:30</span>
@@ -450,7 +478,7 @@
       <span class="tl-emoji">🍝</span><span class="tl-time">12:30</span>
       <span class="tl-content">
         <span class="tl-title">🍝 午餐推荐：Grana @ Hinchcliff House</span>
-        <span class="tl-desc">4.7★ · 5-7 Young St（The Rocks 步行5分钟）。意大利菜，现场磨面粉制意面，百年砂岩建筑改造。必试：Fusilli 开心果虾仁意面、Burrata、Tiramisu。人均$50-80。楼下还有 Apollonia 西西里酒吧</span>
+        <span class="tl-desc">4.7★ · 5-7 Young St（The Rocks 步行5分钟）。百年砂岩建筑 · 现场制意面 · 招牌Fusilli开心果虾仁意面 · 人均$50-80</span>
         <span class="tag pho">本地人推</span>
       </span>
     </div>
@@ -524,7 +552,7 @@
 <div class="sec-title" id="day3"><span class="dot" style="background:var(--pink)"></span>🛍️ 悉尼 · Day 3 购物日</div>
 <div class="sec-sub">7月11日 周六 · 7小时购物时间 · CBD → Bondi Junction → Bondi Beach</div>
 
-<div class="day-block">
+<div class="day-block syd">
   <div class="day-head" style="background:var(--pink)"><span class="date">🛍️ 购物日 · alo / rhode / lululemon / aesop / Ralph Lauren</span><span class="dow">7月11日 周六 · 商店 10:00-17:00</span></div>
   <div class="tl-rows">
     <div class="tl-row break">
@@ -541,7 +569,7 @@
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🧘</span><span class="tl-time">10:45</span>
-      <span class="tl-content"><span class="tl-title">② lululemon @ Westfield Sydney（Level 2）</span><span class="tl-desc">从 Ralph Lauren 走路2分钟。CBD 最大 lulu 店</span><span class="tag shop">lululemon</span></span>
+      <span class="tl-content"><span class="tl-title">② lululemon @ Westfield Sydney（Level 2）</span><span class="tl-desc">从 Ralph Lauren 走路2分钟。CBD旗舰店</span><span class="tag shop">lululemon</span></span>
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🧴</span><span class="tl-time">11:15</span>
@@ -611,8 +639,8 @@
 <div class="sec-title" id="day4"><span class="dot" style="background:#2e7d32"></span>🦒 悉尼 · Day 4</div>
 <div class="sec-sub">7月12日 周日 · 塔龙加动物园 → 飞凯恩斯（周日 Opal $2.90封顶！）</div>
 
-<div class="day-block">
-  <div class="day-head syd"><span class="date">🦒 Taronga Zoo + 告别悉尼</span><span class="dow">7月12日 周日 · 动物园 4.5小时 9:00-13:30 · 航班 19:15</span></div>
+<div class="day-block syd">
+  <div class="day-head"><span class="date">🦒 Taronga Zoo + 告别悉尼</span><span class="dow">7月12日 周日 · 动物园 4.5小时 9:00-13:30 · 航班 19:15</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">07:30</span>
@@ -656,7 +684,7 @@
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🧳</span><span class="tl-time">15:00</span>
-      <span class="tl-content"><span class="tl-title">取行李 + 出发去机场</span><span class="tl-desc">Museum 站坐 T8 直达 SYD 机场 Domestic Terminal（约15分钟）。澳洲国内航班提前1.5小时到即可</span></span>
+      <span class="tl-content"><span class="tl-title">取行李 + 出发去机场</span><span class="tl-desc">Museum 站坐 T8 直达 SYD 机场 Domestic Terminal（约15分钟）。国内航班提前1.5h到</span></span>
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🛫</span><span class="tl-time">19:15</span>
@@ -677,6 +705,8 @@
 </div>
 
 <!-- ############################################ CAIRNS ############################################ -->
+<div class="city-divider cns">🌴 凯恩斯 <span class="days">7月13日–16日 · 3晚 · 大堡礁 + 雨林</span></div>
+
 <div class="sec-title" id="day5"><span class="dot" style="background:var(--cns)"></span>🌴 凯恩斯 · Day 5-7</div>
 <div class="sec-sub">7月13日–16日 · 大堡礁 · 雨林 · 热带冬季（旱季！）</div>
 
@@ -684,8 +714,8 @@
      src="https://images.unsplash.com/photo-1587139223877-04cb899fa3e8?w=960&q=80"
      alt="Great Barrier Reef" onerror="this.style.display='none'">
 
-<div class="day-block">
-  <div class="day-head cns"><span class="date">🌴 Day 5 · 大堡礁全天</span><span class="dow">7月13日 周一</span></div>
+<div class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 5 · 大堡礁全天</span><span class="dow">7月13日 周一</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">07:00</span>
@@ -723,8 +753,8 @@
   </div>
 </div>
 
-<div class="day-block">
-  <div class="day-head cns"><span class="date">🌴 Day 6 · 热带雨林 · 库兰达</span><span class="dow">7月14日 周二</span></div>
+<div class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 6 · 热带雨林 · 库兰达</span><span class="dow">7月14日 周二</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">🌅</span><span class="tl-time">08:00</span><span class="tl-content"><span class="tl-title">起床 + 早餐</span></span></div>
     <div class="tl-row">
@@ -754,8 +784,8 @@
   </div>
 </div>
 
-<div class="day-block">
-  <div class="day-head cns"><span class="date">🌴 Day 7 · 自由日 + 飞去墨尔本</span><span class="dow">7月15日 周三 自由 · 7月16日 周四 飞行</span></div>
+<div class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 7 · 自由日 + 飞去墨尔本</span><span class="dow">7月15日 周三 自由 · 7月16日 周四 飞行</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">😴</span><span class="tl-time">7/15全天</span>
@@ -771,6 +801,8 @@
 </div>
 
 <!-- ############################################ MELBOURNE ############################################ -->
+<div class="city-divider mel">🏛️ 墨尔本 <span class="days">7月16日–20日 · 4晚 · Richmond + 自驾</span></div>
+
 <div class="sec-title" id="day8"><span class="dot" style="background:var(--mel)"></span>🏛️ 墨尔本 · Day 8-11</div>
 <div class="sec-sub">7月16日–20日 · 咖啡之都 · 自驾 · AFL · 大洋路</div>
 
@@ -797,8 +829,8 @@
   🚋 <strong>墨尔本 CBD 免费 Tram 区：</strong>市区范围内轻轨免费，直接上车不用刷卡。Citywalk 全程大部分步行可达，走累了就跳上电车。
 </div>
 <!-- Day 8 -->
-<div class="day-block">
-  <div class="day-head mel"><span class="date">🏛️ Day 8 · CBD Citywalk · 北→南一次性打卡10个地标</span><span class="dow">7月17日 周五 · 9:00-18:00 免费Tram区</span></div>
+<div class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 8 · CBD Citywalk · 北→南一次性打卡10个地标</span><span class="dow">7月17日 周五 · 9:00-18:00 免费Tram区</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">09:00</span>
@@ -808,7 +840,7 @@
       <span class="tl-emoji">☕</span><span class="tl-time">09:00</span>
       <span class="tl-content">
         <span class="tl-title">① Queen Victoria Market 维多利亚女王市场</span>
-        <span class="tl-desc">澳洲最大露天市场！南半球最大规模。熟食区买 artisan 奶酪+火腿+水果当早餐，生鲜区看海鲜，纪念品区买手信。⚠️ 周五下午3点关门，必须早来！</span>
+        <span class="tl-desc">南半球最大露天市场！熟食区 artisan 奶酪火腿+水果当早餐，纪念品区买手信。⚠️ 周五15:00关门，必须早来！</span>
         <span class="tag view">起点</span>
       </span>
     </div>
@@ -816,7 +848,7 @@
       <span class="tl-emoji">🎨</span><span class="tl-time">10:15</span>
       <span class="tl-content">
         <span class="tl-title">② University of Melbourne 墨尔本大学</span>
-        <span class="tl-desc">QVM 步行10分钟即到。澳洲最古老大学之一，砂岩建筑+现代玻璃楼混搭。Old Quad 回廊、钟楼拍照很美</span>
+        <span class="tl-desc">QVM 步行10分钟即到。澳洲最古老大学之一 · Old Quad回廊+钟楼拍照</span>
         <span class="tag view">校园</span>
       </span>
     </div>
@@ -824,7 +856,7 @@
       <span class="tl-emoji">🏛️</span><span class="tl-time">10:45</span>
       <span class="tl-content">
         <span class="tl-title">③ Melbourne Museum + ④ Carlton Gardens 卡尔顿花园</span>
-        <span class="tl-desc">墨大步行5分钟。博物馆玻璃立方体与古典 Royal Exhibition Building 强烈对比。Bunjilaka 原住民文化中心必看。不进馆也可在 Carlton Gardens 梧桐大道拍照</span>
+        <span class="tl-desc">墨大步行5分钟。玻璃立方体 vs 古典 Royal Exhibition Building。Bunjilaka原住民文化中心必看。不进馆也可在Carlton Gardens梧桐大道拍照</span>
         <span class="tag art">博物馆</span>
       </span>
     </div>
@@ -832,7 +864,7 @@
       <span class="tl-emoji">🍽️</span><span class="tl-time">12:00</span>
       <span class="tl-content">
         <span class="tl-title">⑤ State Library Victoria 维多利亚州立图书馆</span>
-        <span class="tl-desc">从 Carlton Gardens 坐 Tram 5分钟。La Trobe 阅览室穹顶全球最美图书馆之一！六边形放射状书桌对称到失语。免费进，上二楼俯拍</span>
+        <span class="tl-desc">从 Carlton Gardens 坐 Tram 5分钟。La Trobe阅览室穹顶——全球最美图书馆之一！六边形放射状书桌。免费，上二楼俯拍</span>
         <span class="tag view">必拍穹顶</span>
       </span>
     </div>
@@ -840,7 +872,7 @@
       <span class="tl-emoji">🛒</span><span class="tl-time">12:45</span>
       <span class="tl-content">
         <span class="tl-title">⑥ Chinatown 墨尔本唐人街 · 午餐 🥟</span>
-        <span class="tl-desc">图书馆步行3分钟。南半球最古老唐人街（1850s）！午餐推荐：Shanghai Street 小笼包 / Hutong Dumpling Bar / Pho 店。吃完逛中式牌坊拍照</span>
+        <span class="tl-desc">图书馆步行3分钟。南半球最古老唐人街（1850s）。推荐：Shanghai Street小笼包 / Hutong Dumpling Bar / Pho</span>
         <span class="tag food">午餐</span>
       </span>
     </div>
@@ -848,7 +880,7 @@
       <span class="tl-emoji">🛍️</span><span class="tl-time">13:45</span>
       <span class="tl-content">
         <span class="tl-title">⑦ Royal Arcade 皇家拱廊 + Block Arcade</span>
-        <span class="tl-desc">Chinatown 步行5分钟。百年维多利亚拱廊，黑色大理石+玻璃穹顶。Gaunt's Clock 整点报时木偶 + Haigh's Chocolates 免费试吃！Jay Chou 同款机位</span>
+        <span class="tl-desc">Chinatown 步行5分钟。百年维多利亚拱廊 · 黑色大理石+玻璃穹顶 · Gaunt's Clock整点报时木偶 · Haigh's Chocolates免费试吃</span>
         <span class="tag view">杰伦同款</span>
       </span>
     </div>
@@ -856,7 +888,7 @@
       <span class="tl-emoji">☕</span><span class="tl-time">14:15</span>
       <span class="tl-content">
         <span class="tl-title">☕ Patricia Coffee Brewers · 全澳第一咖啡</span>
-        <span class="tl-desc">Little Bourke & William St，拱廊步行3分钟。站着喝的仪式感，只有咖啡没有食物。Flat White 或 Cold Filter 拿一杯继续走</span>
+        <span class="tl-desc">Little Bourke & William St，拱廊步行3分钟。站着喝的仪式感，只有咖啡没有食物。Flat White/Cold Filter拿一杯继续走</span>
         <span class="tag coffee">全澳#1</span>
       </span>
     </div>
@@ -864,7 +896,7 @@
       <span class="tl-emoji">🎨</span><span class="tl-time">14:30</span>
       <span class="tl-content">
         <span class="tl-title">⑧ Hosier Lane 霍西尔巷 + AC/DC Lane</span>
-        <span class="tl-desc">从 Patricia 步行5分钟。墨尔本最 iconic 涂鸦巷，Jay Chou 同款！涂鸦随时更新，随手一张 live 图都像杂志封面</span>
+        <span class="tl-desc">从 Patricia 步行5分钟。墨尔本最iconic涂鸦巷，Jay Chou同款！涂鸦随时更新，随手一拍都是杂志封面</span>
         <span class="tag view">杰伦同款</span>
         <img class="tl-img" loading="lazy" src="https://images.unsplash.com/photo-1600220334568-22cf57660e43?w=600&q=80" alt="Hosier Lane" onerror="this.style.display='none'">
       </span>
@@ -888,7 +920,7 @@
       <span class="tl-emoji">☕</span><span class="tl-time">16:00</span>
       <span class="tl-content">
         <span class="tl-title">Degraves Street 巷弄咖啡歇脚</span>
-        <span class="tl-desc">Flinders St 步行1分钟。欧洲风情小巷，露天座位。来一杯 Flat White 回顾今天的 citywalk</span>
+        <span class="tl-desc">Flinders St 步行1分钟。欧洲风情小巷，露天座位，来一杯Flat White回顾今天的citywalk</span>
       </span>
     </div>
     <div class="tl-row">
@@ -900,14 +932,14 @@
     </div>
     <div class="tl-row">
       <span class="tl-emoji">🍝</span><span class="tl-time">19:00</span>
-      <span class="tl-content"><span class="tl-title">晚餐：Lygon Street Carlton · 墨尔本小意大利</span><span class="tl-desc">整条街都是意大利餐厅。推荐：Tiamo（经典老店）、DOC Pizza & Mozzarella Bar。意大利面+红酒，完美约会晚餐</span></span>
+      <span class="tl-content"><span class="tl-title">晚餐：Lygon Street Carlton · 墨尔本小意大利</span><span class="tl-desc">整条街都是意大利餐厅。推荐：Tiamo经典老店 / DOC Pizza & Mozzarella Bar</span></span>
     </div>
   </div>
 </div>
 
 <!-- Day 9: AFL -->
-<div class="day-block">
-  <div class="day-head mel"><span class="date">🏛️ Day 9 · AFL死敌之夜！🏈🔥</span><span class="dow">7月18日 周六 · 19:35 MCG</span></div>
+<div class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 9 · AFL死敌之夜！🏈🔥</span><span class="dow">7月18日 周六 · 19:35 MCG</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">😴</span><span class="tl-time">09:30</span><span class="tl-content"><span class="tl-title">睡个懒觉</span><span class="tl-desc">今天是悠闲白天 + 炸裂晚上</span></span></div>
     <div class="tl-row">
@@ -963,8 +995,8 @@
 </div>
 
 <!-- Day 10: Great Ocean Road -->
-<div class="day-block">
-  <div class="day-head mel"><span class="date">🏛️ Day 10 · 大洋路自驾 🚗</span><span class="dow">7月19日 周日</span></div>
+<div class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 10 · 大洋路自驾 🚗</span><span class="dow">7月19日 周日</span></div>
   <img class="day-banner" loading="lazy" src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=960&q=80" alt="12 Apostles" onerror="this.style.display='none'">
   <div class="tl-rows">
     <div class="tl-row">
@@ -1023,8 +1055,8 @@
 </div>
 
 <!-- Day 11: Departure -->
-<div class="day-block">
-  <div class="day-head mel"><span class="date">🏛️ Day 11 · 告别澳洲 👋</span><span class="dow">7月20日 周一</span></div>
+<div class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 11 · 告别澳洲 👋</span><span class="dow">7月20日 周一</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">🌙</span><span class="tl-time">03:30</span><span class="tl-content"><span class="tl-title">起床</span><span class="tl-desc">痛苦的早班机😅 提前收拾好行李</span></span></div>
     <div class="tl-row"><span class="tl-emoji">🚕</span><span class="tl-time">04:00</span><span class="tl-content"><span class="tl-title">Uber/DiDi 到 MEL 机场（约30分钟 · ~$50 AUD）</span><span class="tl-desc">如果昨晚已还车。或者自己开车到机场还车（预留还车时间）</span></span></div>
