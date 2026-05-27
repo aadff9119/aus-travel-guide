@@ -218,6 +218,74 @@
     .hero { padding:20px }
     .day-block .day-banner { max-height:120px }
   }
+
+  /* ── COLLAPSIBLE DAY BLOCKS ── */
+  .day-head { cursor:pointer; user-select:none; position:relative; }
+  .day-head .arrow { margin-left:auto; font-size:14px; transition:transform .3s; opacity:.7; flex-shrink:0; }
+  .day-block.collapsed .day-head .arrow { transform:rotate(-90deg); }
+  .day-block .tl-rows { overflow:hidden; max-height:8000px; transition:max-height .4s ease, padding .4s ease; }
+  .day-block.collapsed .tl-rows { max-height:0; padding-top:0; padding-bottom:0; }
+  .day-block .day-banner { transition:max-height .4s ease; overflow:hidden; }
+  .day-block.collapsed .day-banner { max-height:0 !important; }
+
+  /* ── TODAY HIGHLIGHT ── */
+  .day-block.today { box-shadow: 0 0 0 3px var(--gold), 0 4px 20px rgba(212,160,23,.25); }
+  .day-block.today .day-head::before {
+    content: "📍 今天"; position:absolute; top:-10px; right:16px;
+    background: var(--gold); color:#fff; font-size:11px; font-weight:700;
+    padding:2px 10px; border-radius:10px; z-index:2;
+  }
+
+  /* ── QUICK INFO BAR ── */
+  .quickbar {
+    display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center;
+    padding:8px 16px; font-size:11px; font-weight:600;
+    background: #1a1a2e; color: #ccc;
+    position:sticky; top:48px; z-index:9;
+    border-bottom:1px solid #333;
+  }
+  .quickbar span { white-space:nowrap; opacity:.85; }
+  .quickbar .qb-hl { color:#f1c40f; opacity:1; }
+
+  /* ── BACK TO TOP ── */
+  .btt {
+    position:fixed; bottom:calc(24px + env(safe-area-inset-bottom)); right:20px;
+    width:44px; height:44px; border-radius:50%;
+    background:rgba(0,0,0,.7); color:#fff; border:none; font-size:20px;
+    cursor:pointer; z-index:99; opacity:0; transform:translateY(20px);
+    transition:opacity .3s, transform .3s; pointer-events:none;
+    box-shadow:0 2px 12px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .btt.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
+
+  /* ── EMERGENCY CARD ── */
+  .em-card { background: #fff5f5; border:1px solid #fecaca; border-radius:var(--radius); padding:18px; margin-top:20px; }
+  .em-card h3 { color:#dc2626; margin-bottom:8px; font-size:15px; }
+  .em-card .em-row { display:flex; gap:8px; font-size:13px; padding:4px 0; align-items:baseline; }
+  .em-card .em-label { font-weight:700; min-width:60px; color:#991b1b; flex-shrink:0; }
+
+  /* ── NAV ACTIVE STATE ── */
+  .nav-bar a.active { box-shadow: 0 0 0 2px currentColor; transform:scale(1.05); }
+
+  /* ── MOBILE REFINEMENTS ── */
+  @media (max-width:700px) {
+    .quickbar { top:44px; gap:4px; font-size:10px; padding:6px 10px; }
+    .btt { width:40px; height:40px; bottom:16px; right:12px; }
+    .day-head { padding:14px 16px !important; }
+    .day-head .date { font-size:15px !important; }
+    .day-head .arrow { font-size:18px; }
+    .nav-bar { padding:10px 12px; gap:4px; }
+    .nav-bar a { font-size:10px; padding:5px 8px; }
+  }
+  @media print {
+    .nav-bar, .quickbar, .btt, .day-head .arrow, .city-divider { display:none !important; }
+    .day-block.collapsed .tl-rows { max-height:none !important; }
+    .day-block { break-inside:avoid; box-shadow:none; border:1px solid #ddd; margin-bottom:12px; }
+    body { font-size:10px; }
+    .hero { padding:12px; }
+    .hero h1 { font-size:20px; }
+  }
 </style>
 </head>
 <body>
@@ -242,6 +310,16 @@
   <a href="#day5" style="color:var(--cns);background:var(--cns-light)">🌴 D5-7</a>
   <a href="#day8" style="color:var(--mel);background:var(--mel-light)">🏛️ D8-11</a>
   <a href="#budget" style="color:#e74c3c;background:#fff5f5">💰 预算</a>
+</div>
+
+<div class="quickbar" id="quickbar" style="display:none">
+  <span>🆘 <span class="qb-hl">000</span></span>
+  <span>·</span>
+  <span>🚃 Opal日封顶$18.70 · 周日$2.90</span>
+  <span>·</span>
+  <span>🚋 墨尔本CBD免费Tram</span>
+  <span>·</span>
+  <span>📅 今天 <span class="qb-hl" id="qb-date"></span></span>
 </div>
 
 <div class="container">
@@ -307,8 +385,8 @@
 <!-- ═══════════ DAY 0: DEPARTURE ═══════════ -->
 <div class="sec-title" id="day0"><span class="dot" style="background:#e74c3c"></span>✈️ 7月8日 周三 · 出发日</div>
 
-<div class="day-block">
-  <div class="day-head" style="background:#e74c3c"><span class="date">🇭🇰 江门 → 香港机场 → ✈️ 直飞悉尼</span><span class="dow">7月8日 周三</span></div>
+<div data-date="2026-07-08" id="day0" class="day-block">
+  <div class="day-head" style="background:#e74c3c"><span class="date">🇭🇰 江门 → 香港机场 → ✈️ 直飞悉尼</span><span class="dow">7月8日 周三</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🚗</span><span class="tl-time">下午</span>
@@ -331,8 +409,8 @@
      src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=960&q=80"
      alt="Sydney Opera House & Harbour Bridge" onerror="this.style.display='none'">
 
-<div class="day-block syd">
-  <div class="day-head"><span class="date">🏙️ 悉尼初体验 · 咖啡 → 艺术 → 日落</span><span class="dow">7月9日 周四 · 日落 ~17:00</span></div>
+<div data-date="2026-07-09" id="day1" class="day-block syd">
+  <div class="day-head"><span class="date">🏙️ 悉尼初体验 · 咖啡 → 艺术 → 日落</span><span class="dow">7月9日 周四 · 日落 ~17:00</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🛬</span><span class="tl-time">09:25</span>
@@ -435,8 +513,8 @@
   </div>
 </div>
 
-<div class="day-block syd">
-  <div class="day-head"><span class="date">🏙️ 海港经典日 · 车站 → 歌剧院 → 大桥 → Manly → 达令港 → Pho</span><span class="dow">7月10日 周五 · 日落 ~17:00</span></div>
+<div data-date="2026-07-10" id="day2" class="day-block syd">
+  <div class="day-head"><span class="date">🏙️ 海港经典日 · 车站 → 歌剧院 → 大桥 → Manly → 达令港 → Pho</span><span class="dow">7月10日 周五 · 日落 ~17:00</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">08:30</span>
@@ -552,8 +630,8 @@
 <div class="sec-title" id="day3"><span class="dot" style="background:var(--pink)"></span>🛍️ 悉尼 · Day 3 购物日</div>
 <div class="sec-sub">7月11日 周六 · 7小时购物时间 · CBD → Bondi Junction → Bondi Beach</div>
 
-<div class="day-block syd">
-  <div class="day-head" style="background:var(--pink)"><span class="date">🛍️ 购物日 · alo / rhode / lululemon / aesop / Ralph Lauren</span><span class="dow">7月11日 周六 · 商店 10:00-17:00</span></div>
+<div data-date="2026-07-11" id="day3" class="day-block syd">
+  <div class="day-head" style="background:var(--pink)"><span class="date">🛍️ 购物日 · alo / rhode / lululemon / aesop / Ralph Lauren</span><span class="dow">7月11日 周六 · 商店 10:00-17:00</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row break">
       <span class="tl-emoji">📋</span><span class="tl-time">购物清单</span>
@@ -639,8 +717,8 @@
 <div class="sec-title" id="day4"><span class="dot" style="background:#2e7d32"></span>🦒 悉尼 · Day 4</div>
 <div class="sec-sub">7月12日 周日 · 塔龙加动物园 → 飞凯恩斯（周日 Opal $2.90封顶！）</div>
 
-<div class="day-block syd">
-  <div class="day-head"><span class="date">🦒 Taronga Zoo + 告别悉尼</span><span class="dow">7月12日 周日 · 动物园 4.5小时 9:00-13:30 · 航班 19:15</span></div>
+<div data-date="2026-07-12" id="day4" class="day-block syd">
+  <div class="day-head"><span class="date">🦒 Taronga Zoo + 告别悉尼</span><span class="dow">7月12日 周日 · 动物园 4.5小时 9:00-13:30 · 航班 19:15</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">07:30</span>
@@ -714,8 +792,8 @@
      src="https://images.unsplash.com/photo-1587139223877-04cb899fa3e8?w=960&q=80"
      alt="Great Barrier Reef" onerror="this.style.display='none'">
 
-<div class="day-block cns">
-  <div class="day-head"><span class="date">🌴 Day 5 · 大堡礁全天</span><span class="dow">7月13日 周一</span></div>
+<div data-date="2026-07-13" id="day5" class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 5 · 大堡礁全天</span><span class="dow">7月13日 周一</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">07:00</span>
@@ -753,8 +831,8 @@
   </div>
 </div>
 
-<div class="day-block cns">
-  <div class="day-head"><span class="date">🌴 Day 6 · 热带雨林 · 库兰达</span><span class="dow">7月14日 周二</span></div>
+<div data-date="2026-07-14" id="day6" class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 6 · 热带雨林 · 库兰达</span><span class="dow">7月14日 周二</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">🌅</span><span class="tl-time">08:00</span><span class="tl-content"><span class="tl-title">起床 + 早餐</span></span></div>
     <div class="tl-row">
@@ -784,8 +862,8 @@
   </div>
 </div>
 
-<div class="day-block cns">
-  <div class="day-head"><span class="date">🌴 Day 7 · 自由日 + 飞去墨尔本</span><span class="dow">7月15日 周三 自由 · 7月16日 周四 飞行</span></div>
+<div data-date="2026-07-15" id="day7" class="day-block cns">
+  <div class="day-head"><span class="date">🌴 Day 7 · 自由日 + 飞去墨尔本</span><span class="dow">7月15日 周三 自由 · 7月16日 周四 飞行</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">😴</span><span class="tl-time">7/15全天</span>
@@ -829,8 +907,8 @@
   🚋 <strong>墨尔本 CBD 免费 Tram 区：</strong>市区范围内轻轨免费，直接上车不用刷卡。Citywalk 全程大部分步行可达，走累了就跳上电车。
 </div>
 <!-- Day 8 -->
-<div class="day-block mel">
-  <div class="day-head"><span class="date">🏛️ Day 8 · CBD Citywalk · 北→南一次性打卡10个地标</span><span class="dow">7月17日 周五 · 9:00-18:00 免费Tram区</span></div>
+<div data-date="2026-07-17" id="day8" class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 8 · CBD Citywalk · 北→南一次性打卡10个地标</span><span class="dow">7月17日 周五 · 9:00-18:00 免费Tram区</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row">
       <span class="tl-emoji">🌅</span><span class="tl-time">09:00</span>
@@ -938,8 +1016,8 @@
 </div>
 
 <!-- Day 9: AFL -->
-<div class="day-block mel">
-  <div class="day-head"><span class="date">🏛️ Day 9 · AFL死敌之夜！🏈🔥</span><span class="dow">7月18日 周六 · 19:35 MCG</span></div>
+<div data-date="2026-07-18" id="day9" class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 9 · AFL死敌之夜！🏈🔥</span><span class="dow">7月18日 周六 · 19:35 MCG</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">😴</span><span class="tl-time">09:30</span><span class="tl-content"><span class="tl-title">睡个懒觉</span><span class="tl-desc">今天是悠闲白天 + 炸裂晚上</span></span></div>
     <div class="tl-row">
@@ -995,7 +1073,7 @@
 </div>
 
 <!-- Day 10: Great Ocean Road -->
-<div class="day-block mel">
+<div data-date="2026-07-19" id="day10" class="day-block mel">
   <div class="day-head"><span class="date">🏛️ Day 10 · 大洋路自驾 🚗</span><span class="dow">7月19日 周日</span></div>
   <img class="day-banner" loading="lazy" src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=960&q=80" alt="12 Apostles" onerror="this.style.display='none'">
   <div class="tl-rows">
@@ -1055,8 +1133,8 @@
 </div>
 
 <!-- Day 11: Departure -->
-<div class="day-block mel">
-  <div class="day-head"><span class="date">🏛️ Day 11 · 告别澳洲 👋</span><span class="dow">7月20日 周一</span></div>
+<div data-date="2026-07-20" id="day11" class="day-block mel">
+  <div class="day-head"><span class="date">🏛️ Day 11 · 告别澳洲 👋</span><span class="dow">7月20日 周一</span><span class="arrow">▼</span></div>
   <div class="tl-rows">
     <div class="tl-row"><span class="tl-emoji">🌙</span><span class="tl-time">03:30</span><span class="tl-content"><span class="tl-title">起床</span><span class="tl-desc">痛苦的早班机😅 提前收拾好行李</span></span></div>
     <div class="tl-row"><span class="tl-emoji">🚕</span><span class="tl-time">04:00</span><span class="tl-content"><span class="tl-title">Uber/DiDi 到 MEL 机场（约30分钟 · ~$50 AUD）</span><span class="tl-desc">如果昨晚已还车。或者自己开车到机场还车（预留还车时间）</span></span></div>
@@ -1098,6 +1176,14 @@
   <li><span class="ti">🍽️</span><div><strong>小费：</strong>澳洲不需要。</div></li>
 </ul>
 
+<div class="em-card">
+  <h3>🆘 紧急信息 Emergency</h3>
+  <div class="em-row"><span class="em-label">报警/急救</span><span>000（全澳通用，免费）</span></div>
+  <div class="em-row"><span class="em-label">中国领馆</span><span>悉尼 +61-2-8595-8002 · 墨尔本 +61-3-9822-0604</span></div>
+  <div class="em-row"><span class="em-label">药房</span><span>Chemist Warehouse（全澳连锁，谷歌地图搜最近店）</span></div>
+  <div class="em-row"><span class="em-label">医院</span><span>Sydney: St Vincent's (Darlinghurst) · Melbourne: The Alfred · Cairns: Cairns Hospital</span></div>
+</div>
+
 </div>
 
 <!-- PWA Install Toast -->
@@ -1108,7 +1194,7 @@
 </div>
 
 <script>
-// Service Worker
+// ── Service Worker ──
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').then(function() {
     console.log('SW registered');
@@ -1117,18 +1203,116 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// iOS install toast
-var ua = navigator.userAgent;
-var isIOS = /iPad|iPhone|iPod/.test(ua);
-var isStandalone = ('standalone' in navigator) && navigator.standalone;
-if (isIOS && !isStandalone && !localStorage.getItem('pwa-toast-done')) {
-  setTimeout(function() {
-    document.getElementById('pwa-toast').style.display = 'block';
-  }, 2000);
-}
-document.getElementById('pwa-toast').querySelector('button').addEventListener('click', function() {
-  localStorage.setItem('pwa-toast-done', '1');
+// ── iOS install toast ──
+(function(){
+  var ua = navigator.userAgent;
+  var isIOS = /iPad|iPhone|iPod/.test(ua);
+  var isStandalone = ('standalone' in navigator) && navigator.standalone;
+  if (isIOS && !isStandalone && !localStorage.getItem('pwa-toast-done')) {
+    setTimeout(function() {
+      document.getElementById('pwa-toast').style.display = 'block';
+    }, 2000);
+  }
+  var toastBtn = document.querySelector('#pwa-toast button');
+  if (toastBtn) toastBtn.addEventListener('click', function() {
+    localStorage.setItem('pwa-toast-done', '1');
+  });
+})();
+
+// ── 1. Collapsible day blocks ──
+document.querySelectorAll('.day-head').forEach(function(head) {
+  head.addEventListener('click', function() {
+    var block = this.closest('.day-block');
+    if (block) block.classList.toggle('collapsed');
+  });
+});
+
+// ── 2. Today auto-highlight + quickbar ──
+(function(){
+  var tripStart = new Date('2026-07-08');
+  var tripEnd = new Date('2026-07-20');
+  var now = new Date();
+
+  if (now >= tripStart && now <= tripEnd) {
+    var qb = document.getElementById('quickbar');
+    if (qb) qb.style.display = 'flex';
+
+    var months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+    var dateStr = months[now.getMonth()] + '月' + now.getDate() + '日';
+    var qbDate = document.getElementById('qb-date');
+    if (qbDate) qbDate.textContent = dateStr;
+
+    var dayNum = Math.floor((now - tripStart) / (1000*60*60*24));
+    var dayIds = ['day0','day1','day2','day3','day4','day5','day6','day7','day7','day8','day9','day10','day11'];
+    var todayId = dayIds[dayNum];
+    if (todayId) {
+      var todayBlock = document.getElementById(todayId);
+      if (todayBlock) {
+        todayBlock.classList.add('today');
+        setTimeout(function() {
+          todayBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 600);
+      }
+    }
+  }
+})();
+
+// ── 3. Nav active highlight ──
+(function(){
+  var navLinks = document.querySelectorAll('.nav-bar a');
+  var dayBlocks = document.querySelectorAll('[id^="day"]');
+  if (!navLinks.length || !dayBlocks.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        navLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+  dayBlocks.forEach(function(block) { observer.observe(block); });
+})();
+
+// ── 4. Back to top button ──
+(function(){
+  var btt = document.getElementById('btt');
+  if (!btt) return;
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        if (window.scrollY > window.innerHeight) {
+          btt.classList.add('visible');
+        } else {
+          btt.classList.remove('visible');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+// ── 5. Smooth scroll for nav links ──
+document.querySelectorAll('.nav-bar a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var targetId = this.getAttribute('href').substring(1);
+    var target = document.getElementById(targetId);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
 </script>
 
+
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 </body></html>
